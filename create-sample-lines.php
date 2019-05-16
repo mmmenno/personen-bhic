@@ -1,18 +1,20 @@
 <?php
 
 $i = 0;
+$fp = fopen('sample-voor-1800.csv', 'w');
 
-if (($handle = fopen("aangeleverd/Schepenakten_voor1800.txt", "r")) !== FALSE) {
+if (($handle = fopen("../aangeleverd/Schepenakten_voor1800.txt", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 5000, "#")) !== FALSE) {
-    	if($i%1000==0){
-    		echo $data[0] . "#" . $data[7] . "\n";
+    	if($i%999==0){
+    		$fields = array( $data[0], $data[7]);
+    		fputcsv($fp, $fields);
     	}
        	$i++;
     }
     fclose($handle);
 }
 
-
+fclose($fp);
 
 
 ?>

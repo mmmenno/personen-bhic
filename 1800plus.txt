@@ -1,0 +1,317 @@
+
+INHOUD1
+Array
+(
+)
+
+{{W.J. Heeren}} verklaart dat de schuld van 600 gulden op 15-06-1804 door {{J.J.F. van Zurpele}} aan hem is voldaan.
+Array
+(
+    [0] => W.J. Heeren
+    [1] => J.J.F. van Zurpele
+)
+
+{{J. Daemen}}, loco-schout van ambt Cuijk; G. {{Kesschietre van Havre}} en {{Alexander Schonermarck}}, beiden gemeentebestuurders te Beugen en Boxmeer als gelasten van {{Gerrit Kempkes}} en {{Hendrina Dinnissen}} e.l. verkopen aan {{Jantje Huijbers}}, meerderjarige jongedochter twee bij elkaar gelegen huizen, schuur, moeshof, boomgaard, bouwland te Beugen, bouwland in het Pastoorsveld, in het {{Boxmeersch Veld}} en aan de Marbroeken, alsmede weiland voor Fl. 3625,--.
+Array
+(
+    [0] => Kesschietre van Havre
+    [1] => Alexander Schonermarck
+    [2] => Gerrit Kempkes
+    [3] => Hendrina Dinnissen
+    [4] => Jantje Huijbers
+    [5] => Boxmeersch Veld
+    [6] => J. Daemen
+)
+
+De kinderen en erfgenamen van {{Jan Lindert Bergmans}} en {{Anna Poos}}, in leven echtelieden aan de {{Sambeeksche Hoek}}, met name {{Joannes Bergmans}} en zijn vrouw {{Petronella Ermers}}; {{Lindert Bergmans}} en zijn vrouw {{Jacomina Lemmens}}; {{Arnoldus Arts}} en zijn vrouw {{Catharina Bergmans}}; {{Egbertus Gerrits}} en zijn vrouw {{Joanna Bergmans}}; verkopen voor 650 gulden aan {{Jan Wilberts}} en zijn vrouw {{Anna Jaspers}}, een perceel bouwland gelegen te Oploo, groot ongeveer 5 kleine morgen. In het westen en zuiden grenzend aan het “edele huis van Heumen”, in het oosten aan {{Lindert Hendriks}} en in het noorden aan {{Jan Egbers}}.
+Array
+(
+    [0] => Jan Lindert Bergmans
+    [1] => Anna Poos
+    [2] => Sambeeksche Hoek
+    [3] => Joannes Bergmans
+    [4] => Petronella Ermers
+    [5] => Lindert Bergmans
+    [6] => Jacomina Lemmens
+    [7] => Arnoldus Arts
+    [8] => Catharina Bergmans
+    [9] => Egbertus Gerrits
+    [10] => Joanna Bergmans
+    [11] => Jan Wilberts
+    [12] => Anna Jaspers
+    [13] => Lindert Hendriks
+    [14] => Jan Egbers
+)
+
+{{Theodora Emonds}} weduwe van {{Johannes Willems van der Burgt}}, landbouwster te Boekel verklaart voor haar kinderen {{Gerardus}}, {{Elisabeth}} en {{Anna Maria}} tot voogd te laten benoemen {{Henricus Tonijs}}, landbouwer te Boekel.
+Array
+(
+    [0] => Johannes Willems van der Burgt
+    [1] => Theodora Emonds
+    [2] => Anna Maria
+    [3] => Henricus Tonijs
+    [4] => Gerardus
+    [5] => Elisabeth
+)
+
+{{Peter van Velthoven}}, bouwman Erp en zijn vrouw {{Johanna Maria Hurkmans}} verkopen bouwland op Boerdonk en Beek en Donk.
+Array
+(
+    [0] => Johanna Maria Hurkmans
+    [1] => Peter van Velthoven
+)
+
+{{Willem Crooijmans}}, landbouwer Erp; {{Johannes van der Sanden}}, landbouwer Boekel en {{Antonie Donkers}}, landbouwer Gemert verkopen roerend goed voor Fl. 300,25.
+Array
+(
+    [0] => Johannes van der Sanden
+    [1] => Willem Crooijmans
+    [2] => Antonie Donkers
+)
+
+{{Louwrens Jonkers}}; {{Peter Jonkers}}; {{Theodorus Jonkers}}; {{Theodora Maria Jonkers}} vrouw van {{Gijsbertus Slaats}}; {{Johanna Maria Jonkers}} vrouw van {{Lammert Antonie de Groot}} allen bouwlieden Boekel en {{Cornelia Jonkers}} vrouw van {{Hendrikus Kuijpers}}, bouwlieden Volkel bezitten gezamenlijk onroerend goed wat ze willen delen huis, erf, tuin, bouw- en weiland aan den Molenakker, huis, schuur, erf, bouw- en weiland, tuin aan de {{Peelse Huis}}, bouwland onder Uden aan de Kwabbe, heide onder Uden en enige schuldvorderingen, schaar te velde en kontanten.
+Array
+(
+    [0] => Lammert Antonie de Groot
+    [1] => Theodora Maria Jonkers
+    [2] => Johanna Maria Jonkers
+    [3] => Louwrens Jonkers
+    [4] => Peter Jonkers
+    [5] => Theodorus Jonkers
+    [6] => Gijsbertus Slaats
+    [7] => Cornelia Jonkers
+    [8] => Hendrikus Kuijpers
+    [9] => Peelse Huis
+)
+
+{{Gerardus Oppers}}, bouwman Boekel bekent schuldig te zijn aan {{Hendrik van der Heijden}}, smidsgezel {{Uden Fl}}. 1000,--. Waarborg: diverse percelen onder Boekel.
+Array
+(
+    [0] => Hendrik van der Heijden
+    [1] => Gerardus Oppers
+    [2] => Uden Fl
+)
+
+{{Henricus Philippus van den Bergh}}, medicine doctor; {{Hendricus Manders}} en {{Mathijs Rath}}, kooplieden; {{Maria Anna Frederika van Ham}} weduwe Louis {{Richard Leopold Joseph de Kuijper}} voor zich en als moeder van Joseph; Hubertus; Augustinus en {{Henriette de Kuijper}}; {{Johannes van den Tillaart}}, landbouwer; {{Maria Jeuriens}}, zonder beroep; {{Jacobus van Santvoort}}, landbouwer allen te Veghel; {{Christiaan Christoffel Lutkie}}, boekhandelaar; {{Elisabeth van den Heuvel}}, zonder beroep beiden te ’s-Hertogenbosch verkopen hooigras voor Fl. 967,50.
+Array
+(
+    [0] => Maria Anna Frederika van Ham
+    [1] => Richard Leopold Joseph de Kuijper
+    [2] => Henricus Philippus van den Bergh
+    [3] => Christiaan Christoffel Lutkie
+    [4] => Henriette de Kuijper
+    [5] => Johannes van den Tillaart
+    [6] => Jacobus van Santvoort
+    [7] => Elisabeth van den Heuvel
+    [8] => Hendricus Manders
+    [9] => Mathijs Rath
+    [10] => Maria Jeuriens
+)
+
+{{Antonie van den Elsen}}, arbeider; {{Martinus van den Elsen}}, arbeider en {{Johannes van den Elsen}}, arbeider allen wonende te Erp verkopen aan {{Gerardus van den Elsen}}, bouwmansknecht op Boerdonk het 1/6 deel onverdeeld in ontgonnen grond met daarop staande huisje op den Boerdonkschendijk te Erp voor Fl. 170,--; hen aangekomen bij verkoop 2-2-1869 en bij erfenis van hun moeder {{Ardina Beekmans}}.
+Array
+(
+    [0] => Antonie van den Elsen
+    [1] => Martinus van den Elsen
+    [2] => Johannes van den Elsen
+    [3] => Gerardus van den Elsen
+    [4] => Ardina Beekmans
+)
+
+{{Pieter van de Reijt}} (Rijt) wonende tot Geldrop zoo voor zig als last en procuratie hebbende van {{Jacomijn Peter van der Heijden}}, weduwe {{Hendrik Wouter van de Rijt}}, Bartel en {{Elizabeth van de Reijt}}, {{Leendert Hendrik van de Reijt}} en laastelijk {{Peter Geritse Kuijpers}} als in huwelijk hebbende Johanna H van de Reijt, alle zoo tot Geldrop, Dinther als Veghel woonagtig. Dewelke verklaart te transporteeren aan Rut en {{Johannis Corstiaensse Burgers}} wonende tot Veghel, een derde part in een groote heijkamp gelegen onder Jeschot op de Heijde, gemeen met {{Christiaen Versteegde}} c.s.
+Array
+(
+    [0] => Jacomijn Peter van der Heijden
+    [1] => Hendrik Wouter van de Rijt
+    [2] => Leendert Hendrik van de Reijt
+    [3] => Peter Geritse Kuijpers
+    [4] => Johannis Corstiaensse Burgers
+    [5] => Pieter van de Reijt
+    [6] => Elizabeth van de Reijt
+    [7] => Christiaen Versteegde
+)
+
+{{Henricus Antonijs der Kinderen}} als schuldenaar. {{Willem Mathijssen van Eerd}} ende {{Cornelis Hendriks van de Reijt}}, als borgen en inwoonderen alhier. Hij is schuldig aan en ten behoeve van de heer {{Jacob Meijer}}, secretaris en wonende te Hoogeloon, een capitale somme van twee hondert Carolij guldens.
+Array
+(
+    [0] => Henricus Antonijs der Kinderen
+    [1] => Willem Mathijssen van Eerd
+    [2] => Cornelis Hendriks van de Reijt
+    [3] => Jacob Meijer
+)
+
+Transport doot 1 {{Francis Lathouwers}}, timmerman en wonende te Veghel, gemachtigde van {{Willem Lathouwers}}, timmerman en wonende te Sint Oedenrode. 2 {{Johanna Lathouwers}}, dienstmeid te Sint Oedenrode. Zij hebben verkocht aan {{Lambert Lathouwers}}, timmerman te Sint Oedenrode, elk hun geregt een vierde en alzoo te zamen drie vierde gedeelte onverdeeld in twee aan elkander gelegen huisjes bestaande in vier woningen, met de daarachter liggende hof, groot circa drie roeden. Staande ende gelegen ter plaatze genoemd Kofferen, belend aan eene zijde {{Johannes van den Heuvel}}, andere zijde de kinderen {{Jan de Klein}}, anderen eind de {{Heer Jan de Brueys}}, en het andere eind de gemeene straat. De verkoopers aangekomen bij erfenis van hunne vader {{Hendrik Lathouwers}}, overleden alhier in den jare achtienhonderd vier en twintig.
+Array
+(
+    [0] => Heer Jan de Brueys
+    [1] => Johannes van den Heuvel
+    [2] => Jan de Klein
+    [3] => Francis Lathouwers
+    [4] => Willem Lathouwers
+    [5] => Johanna Lathouwers
+    [6] => Lambert Lathouwers
+    [7] => Hendrik Lathouwers
+)
+
+Testament door {{Geerdiena van den Oever}} huisvrouw van {{Martinus van Erp}}, wonende te Sint Oedenrode. {{Erfgenaam Geerdiena van de Oever}}. De testatrice is overleden te Sint Oedenrode 19 april 1850.
+Array
+(
+    [0] => Erfgenaam Geerdiena van de Oever
+    [1] => Geerdiena van den Oever
+    [2] => Martinus van Erp
+)
+
+Boelhuis ten verzoeke van {{Jan Verhagen}}, Hendrikus en {{Geertrui Verhagen}}, bouwlieden en wonende te Sint Oedenrode en anderen.
+Array
+(
+    [0] => Jan Verhagen
+    [1] => Geertrui Verhagen
+)
+
+Deeling door 1 {{Martinus Versantvoort}} zoon van Jan, bouwman en wonende te Sint Oedenrode. 2 {{Johannes van Berkel}}, landbouwer en wonende te Schijndel, gehuwd met {{Elisabeth Versantvoort}}. Mede als voogd over de twee minderjarige kinderen van wijlen de echtelieden {{Jan Versantvoort}} en {{Petronella van Kemenade}} met namen: Hendrika en {{Mathijs Marinus Versantvoort}}. 3 {{Josephus van de Rijt}}, bouwman en wonende te Lieshout, gehuwd met {{Johanna Versantvoort}}. 4 {{Maria Versantvoort}}, meerderjarig ongehuwd, landbouwer en wonende te Sint Oedenrode. 5 {{Arnoldus Versantvoort}} zoon van Jan, landbouwer en wonende te Sint Oedenrode. Van de nalatenschappen hunner ouders en behuwd ouders wijlen {{Jan Versantvoort}} en {{Petronella Kemenade}}. {{Aan Arnoldus Versantvoort}} zoon van Jan. {{Maria Versantvoort}}, {{Hendrika Versantvoort}}, {{Mathijs Marinus Versantvoort}}, o.a een vierde gedeelte onbedeelt in een huis erf en aangelag sectie F 1032, 1033, 1034, 1035, 1036.
+Array
+(
+    [0] => Mathijs Marinus Versantvoort
+    [1] => Aan Arnoldus Versantvoort
+    [2] => Johannes van Berkel
+    [3] => Petronella van Kemenade
+    [4] => Josephus van de Rijt
+    [5] => Martinus Versantvoort
+    [6] => Elisabeth Versantvoort
+    [7] => Jan Versantvoort
+    [8] => Johanna Versantvoort
+    [9] => Maria Versantvoort
+    [10] => Arnoldus Versantvoort
+    [11] => Petronella Kemenade
+    [12] => Hendrika Versantvoort
+)
+
+Testament van {{Johanna van de Bosch}}, eerder weduwe van {{Francis Schoren}}, thans huisvrouw van {{Franciscus van de Wijdeven}} in de Eerde onder Veghel. Erfgenaam is haar man.
+Array
+(
+    [0] => Johanna van de Bosch
+    [1] => Franciscus van de Wijdeven
+    [2] => Francis Schoren
+)
+
+Openbare verkoop van roerende goederen op het dorp te Sint Oedenrode, ten verzoeke van den heer {{Eduard Martinus Hendrikus Leurs}}, particuliere en wonende te Sint Oedenrode.
+Array
+(
+    [0] => Eduard Martinus Hendrikus Leurs
+)
+
+Openbare verkoop van roerende goederen in Eerschot te Sint Oedenrode, ten verzoeke van {{Adrianus van den Brand}}, werkman en wonende te Sint Oedenrode.
+Array
+(
+    [0] => Adrianus van den Brand
+)
+
+{{Lambertus Verbruggen}}; {{Johannes Verbruggen}}; {{Jan Verbruggen}} en {{Petrus Kerkhof}} gehuwd met {{Ardina Verbruggen}}, allen bouwlieden te Erp bezitten gezamenlijk de nalatenschap van hun ouders {{Johannes Verbruggen}} en {{Lamberdina van den Berg}} en willen die gaan delen.
+Array
+(
+    [0] => Lamberdina van den Berg
+    [1] => Lambertus Verbruggen
+    [2] => Johannes Verbruggen
+    [3] => Jan Verbruggen
+    [4] => Petrus Kerkhof
+    [5] => Ardina Verbruggen
+)
+
+{{Geregistreerd Ter}} instantie van de {{Municipaliteijt van Sint}} Oedenrode. Verzoek van {{H. P. Goijerts}} te Schijndel om eenige perceeltjes gemeentes grond onder Schijndel nabij de gemeente van Sint Oedenrode, alwaar sijne hut staende is in eijgendom te acquereeren. Alzoo hij ’t zelve in den jaare 1794 geduurende den oorlog toen er geene gelegenheid was om daar toe de vereijste permissie te verzoeken heeft ingenomen.
+Array
+(
+    [0] => Municipaliteijt van Sint
+    [1] => Geregistreerd Ter
+    [2] => H. P. Goijerts
+)
+
+Openbare verkoop van roerende goederen op verzoek van {{Jacob Jacot}}, vice burgemeester van Veghel.
+Array
+(
+    [0] => Jacob Jacot
+)
+
+{{Melchior Johannes Martinus de Bruijn}}, burgemeester van Erp, wonende te Veghel; {{Jan van den Heuvel}}, bouwman en {{Hendrik van den Biggelaar}}, rentenier wethouders te Erp verkopen bos.
+Array
+(
+    [0] => Melchior Johannes Martinus de Bruijn
+    [1] => Jan van den Heuvel
+    [2] => Hendrik van den Biggelaar
+)
+
+1. {{Catharina van Cleef}}. 2. {{Elisabeth van Cleef}} met haar man {{Lambert Peter van de Ven}}. 3. {{Hendrikus van Cleef}}. 4. {{Hendrina van Cleef}}. 5. {{Lucia van Cleef}} met haar man {{Jan Verbruggen}}, smitsbaas. 6. {{Matheus van Rijbroek}} als voogd over de minderjarige {{Lambert van Cleef}} waarvan {{Willem van den Tillaar}} toeziend voogd is. Ze delen het nagelaten goed van hun ouders {{Johannes van Cleef}} en {{Maria Lambert van Rijbroek}}. Ze laten na een huis in het Dorshout, land in het Donkerskamp, in de Akert en op den Doornhoek.
+Array
+(
+    [0] => Lambert Peter van de Ven
+    [1] => Maria Lambert van Rijbroek
+    [2] => Catharina van Cleef
+    [3] => Elisabeth van Cleef
+    [4] => Hendrikus van Cleef
+    [5] => Hendrina van Cleef
+    [6] => Lucia van Cleef
+    [7] => Matheus van Rijbroek
+    [8] => Lambert van Cleef
+    [9] => Willem van den Tillaar
+    [10] => Johannes van Cleef
+    [11] => Jan Verbruggen
+)
+
+{{Johanna Maria van Veghel}} weduwe {{Cristiaan Voesten}} en {{Johan de Jongh}}, koopman te Heusden mede als vader van zijn minderjarig kind {{Anna Christina}} in huwelijk bij {{Anna Christiana Voesten}} en waarvan de toeziend voogd is {{Carel Willem Christiaan van Friest}}, koopman te ’s-Hertogenbosch. Ze verkopen voor publiek en alle man: Een huis met schuur, achterhuis, waarin drie woningen, privaat en hof te Veghel in de straat; Twee percelen hooiland met een halve poel, genaamd het Ketelwiel, maatboek nr. 714, 715 en 716 in de Seijtersche beemden; Bouwland in de Seijtersche beemden. De eerste koop gaat naar {{Lambertus van den Boer}} voor f.1852,- en de tweede en derde koop naar jonkheer {{Jozephus Franciscus de Kuijper}} voor f.800,--.
+Array
+(
+    [0] => Carel Willem Christiaan van Friest
+    [1] => Johanna Maria van Veghel
+    [2] => Jozephus Franciscus de Kuijper
+    [3] => Anna Christiana Voesten
+    [4] => Johan de Jongh
+    [5] => Lambertus van den Boer
+    [6] => Cristiaan Voesten
+    [7] => Anna Christina
+)
+
+{{Willem Johannes van Doorn}}, landbouwer te Veghel heeft verkocht aan {{Wilhelmina van Doorn}} weduwe {{Hendrik van Asseldonk}}; {{Anna van Doorn}}; {{Petronella van Doorn}}; {{Emmerens van Doorn}} en {{Johannes van Doorn}}, allen ongehuwd en wonende te Veghel. Verkocht wordt de onverdeelde helft van de navolgende goederen: Land in de Geerbunders sectie D. 230 t/m 234, land in het Middegaal A. 371 en 372. Land in het Geerbosch A. 508 en 509., hooiland genaamd de Oorbeemd A. 694, land op de {{Kleine Hinteld}}, B.50, land genaamd Kraaienkamp B. 609 en 610, op het Ven B. 620, land aan de Watersteegd B. 687, 688 en 689, in de Heijbunders B. 721, aan de Heselaar genaamd Hemel B. 1029, 1030 en 1031. Een huis etc. aan de Heselaar genaamd Hemel sectie B. 1023, 1081, 1082, 1085, 1092, 1367 en 1368., land aan de Beukelaar B. 1220, aan de Bundersche hoek B. 1299, aan de Keugerstraat D. 354. Al deze goederen komen van hun overleden ouders {{Johannes Hendrik van Doorn}} en {{Emmerens van Lankveld}}.
+Array
+(
+    [0] => Willem Johannes van Doorn
+    [1] => Johannes Hendrik van Doorn
+    [2] => Wilhelmina van Doorn
+    [3] => Hendrik van Asseldonk
+    [4] => Anna van Doorn
+    [5] => Petronella van Doorn
+    [6] => Emmerens van Doorn
+    [7] => Johannes van Doorn
+    [8] => Emmerens van Lankveld
+    [9] => Kleine Hinteld
+)
+
+{{Martinus van Heessel}} koopman heeft verkocht aan {{Karel Willem Damen}} voerman en landbouwer een perceel bouwland sectie I 1968.
+Array
+(
+    [0] => Karel Willem Damen
+    [1] => Martinus van Heessel
+)
+
+Verkoop door {{Cornelis van de Biggelaar}} klompenmaker aan {{Waltherus Josephus van Dijk}}. Van een huis met erf ter plaatsen de Bunders sectie F 1447, 1448 en 123.
+Array
+(
+    [0] => Waltherus Josephus van Dijk
+    [1] => Cornelis van de Biggelaar
+)
+
+{{Johannes van Lankveld}}, bakker; {{Adriana van Lankveld}} echtgenote van {{Johannes van Laarschot}}; {{Johannes Adriaan Ketelaars}}, dienstknecht en {{Piet Adriaan Ketelaars}}, klompenmaker. Ze delen het nagelaten goed van {{Lambertus van Lankveld}} te Veghel overleden op 20-06-1849. Nagelaten goed: land te Veghel aan het Zilsje D. 13, 14, 15 en 16., de Hoef B. 205, aan het Geerbosch A. 505, 1588 en 1589, in het Beukelaars broek C. 749 en land in het {{Oost Dubbelen}} A. 1663, 1664 en 1665.
+Array
+(
+    [0] => Johannes Adriaan Ketelaars
+    [1] => Piet Adriaan Ketelaars
+    [2] => Johannes van Lankveld
+    [3] => Adriana van Lankveld
+    [4] => Johannes van Laarschot
+    [5] => Lambertus van Lankveld
+    [6] => Oost Dubbelen
+)
+
+Op verzoek van {{Kersten Arts}} te Haps, openbaar verkopen van te velde staande gewassen, voor een totaalbedrag van 139 gld. en 10 st.
+Array
+(
+    [0] => Kersten Arts
+)
