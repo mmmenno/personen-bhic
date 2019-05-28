@@ -1,0 +1,3 @@
+# Persoonsobservaties in Schepenakten
+
+Het script `findpersons.php` vindt personen - met reguliere expressies - in transcripties en beschrijvingen van akten en markeert deze tussen {{dubbele accolades}}. Daarnaast bevat het script functies die de gevonden voornamen splitsen in naamdelen zoals gedefinieerd in de [Person Name Vocabulary (PNV)](https://w3id.org/pnv), relaties (ouder/kind, echtgenoten) zoeken tussen verschillende personen en de observatie wegschrijven als RDF - gebruikmakend van de [roar](https://leonvanwissen.nl/vocab/roar/docs/) vocabulary.
