@@ -1,6 +1,9 @@
 
 
 *.ttl
-*.csv
 *.txt
 .DS_Store
+
+
+sample-na-1800.csv
+sample-voor-1800.csv
