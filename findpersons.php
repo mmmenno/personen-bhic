@@ -8,7 +8,7 @@
 function decapitate($str){
 
     $notnames = array("Voor","Wij","Testament","Testes","Deling","Transport",
-        "Actum","Aen","Ende","Door","Genoemde","Voornoemde","Rekest","Hertogenbosch",
+        "Actum","Aen","Aan","Ende","Door","Genoemde","Voornoemde","Rekest","Hertogenbosch",
         "Onse Lieve Vrouwe","Hem","Bij","Onze","De");
 
     foreach ($notnames as $notname) {
@@ -87,10 +87,10 @@ function findNames($txt){
     $patterns = array();
 
 
-    $patterns[] = "/[A-Z][a-z]+ (dochter|zoon|soene?) van [A-Z][a-z]+( [A-Z][a-z]+)?(van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.)? [A-Z][a-z]+/";
+    //$patterns[] = "/[A-Z][a-z]+ (dochtere?|zoon|soene?|sone|soon) van [A-Z][a-z]+( [A-Z][a-z]+)?(van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.)? [A-Z][a-z]+/";
     // Jenneke dochter van Willem Hendrik van den Heuvel
 
-    $patterns[] = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?)( van)?( w(ij|y)len)? [A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.))? [A-Z][a-z]+/";
+    $patterns[] = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? [A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.))? [A-Z][a-z]+/";
     // Agnes dochter van Jan Willem Buijs
 
     $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+ (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.) [A-Z][a-z]+/";
@@ -106,10 +106,10 @@ function findNames($txt){
     $patterns[] = "/([A-Z][a-z]+ )?(Corn\.|Henr\.|Hend\.|Jac\.|Fr\.) ((van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.) )?([A-Z][a-z]+ )?[A-Z][a-z]+/";
     // Corn. Van Dijck; Henr. Arts
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+/";
-
-    $patterns[] = "/(Mr\.|Mr|mr|mr\.|Monsr\.|Juffr\.) [A-Z][a-z]+ [A-Z][a-z]+/";
+    $patterns[] = "/(Mr\.|Mr|mr|mr\.|\.|Juffr\.) [A-Z][a-z]+ [A-Z][a-z]+/";
     //  Mr. Jan Drabbe
+
+    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+( (dochter|zoen))?/";
 
     $patterns[] = "/[A-Z][a-z]+ (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.) [A-Z][a-z]+/";
     // Jan van Helvoirt
@@ -144,7 +144,7 @@ function findNames($txt){
                     $leftover = str_replace($value, "", $leftover);
                     continue;
                 }
-                if(count($parts)<4 && !isGivenName($parts[0]) && !isInitials($parts[0])){
+                if(count($parts)<5 && !isGivenName($parts[0]) && !isInitials($parts[0]) && !isPrefix($parts[0])){
                     continue;
                 }
                 if(!in_array($value,$names)){
@@ -179,6 +179,14 @@ function findNames($txt){
     }
 
 
+    // now, maybe see if there's another name WITHIN a name
+    foreach ($names as $key => $value) {
+        $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.))? [A-Z][a-z]+)/";
+        if(preg_match($pattern, $value, $found)){
+            $names[] = $found[6];
+        }
+    }
+
 
     return array("names" => $names, "marked" => $marked);
 }
@@ -188,15 +196,16 @@ if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
     $i = 0;
     $x = 0;
     while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
-        if($i>22){
+        if($i>62){
             //break;
         }
         $i++;
+        $data[1] = str_replace("  ", " ", $data[1]); // double space in text, sometimes :-(
     	//echo "\n" . $data[1] . "\n\n";
     	
         $result = findNames($data[1]);
 
-        echo "\n" . $result['marked'] . "\n";
+        echo "\n" . $i . " - " . $result['marked'] . "\n";
 
     	//print_r($result['names']);
 
@@ -217,7 +226,11 @@ if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
             //print_r($relations);
         }
 
-        $daterange = properDates($data[2]);
+        if(!$daterange = properDates($data[2])){
+            //echo $data[2] . "\n";  // notations lik 1-8-[1457], 1653 maart 3, 20-NOV-17
+            //print_r($daterange);
+        }
+        
 
         $rdf = createPersonObservations($data[0],$daterange,$names,$relations);
 
@@ -228,16 +241,37 @@ if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
 }
 
 /**
- * create proper dates
+ * create proper dates (daterange actually)
  */
 function properDates($datestring){
 
-    if(preg_match("/[0-9]{2}-[0-9]{2}-[0-9]{4}/", $datestring)){ 
-        $dmy = explode("-", $datestring); 
-        return array($dmy[2] . "-" . $dmy[1] . "-" . $dmy[0],$dmy[2] . "-" . $dmy[1] . "-" . $dmy[0]); 
+    if(preg_match("/^([0-9]{1,2})(-|\.)([0-9]{1,2})(-|\.)([0-9]{4})/", $datestring,$found)){ 
+
+        if(strlen($found[1])==1){ $found[1] = "0" . $found[1]; }
+        if(strlen($found[3])==1){ $found[3] = "0" . $found[3]; }
+        return array(
+            $found[5] . "-" . $found[3] . "-" . $found[1],
+            $found[5] . "-" . $found[3] . "-" . $found[1]
+        ); 
     }
 
-    return array($datestring,$datestring);
+    if(preg_match("/^([A-Za-z]+ )?([0-9]{1,2}) ([A-Za-z]+) ([0-9]{4})$/", $datestring, $found)){ 
+        $from = array("januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december");
+        $to = array("01","02","03","04","05","06","07","08","09","10","11","12");
+        $maand = str_replace($from, $to, $found[3]);
+        if(strlen($found[2])==1){ $found[2] = "0" . $found[2]; }
+        return array($found[4] . "-" . $maand . "-" . $found[2],$found[4] . "-" . $maand . "-" . $found[2]); 
+    }
+
+    if(preg_match("/^[0-9]{4}$/", $datestring)){ 
+        return array($datestring . "-01-01",$datestring . "-12-31"); 
+    }
+
+    if(preg_match("/^([0-9]{4})-([0-9]{4})$/", $datestring, $found)){ 
+        return array($found[1] . "-01-01",$found[2] . "-12-31"); 
+    }
+
+    return false;
 
 }
 
@@ -284,10 +318,16 @@ function createPersonObservations($deedid,$daterange,$names,$relations){
             if($rel['p1']==$k && $rel['relation']=="huwelijk"){
                 $ttl .= "\tschema:spouse personobs:" . $deedid . "-" . $pkeys[$rel['p2']] . " ;\n";
             }
+            if($rel['p1']==$k && $rel['relation']=="heeft ouder"){
+                $ttl .= "\tschema:parent personobs:" . $deedid . "-" . $pkeys[$rel['p2']] . " ;\n";
+            }
+            if($rel['p1']==$k && $rel['relation']=="heeft kind"){
+                $ttl .= "\tschema:children personobs:" . $deedid . "-" . $pkeys[$rel['p2']] . " ;\n";
+            }
             if($rel['p1']==$k && isset($rel['p1gender'])){
                 $ttl .= "\tschema:gender schema:" . $rel['p1gender'] . " ;\n";
             }
-            if($rel['p1']==$k && isset($rel['p1death'])){
+            if($rel['p1']==$k && isset($rel['p1death']) && $daterange){
                 $ttl .= "\tbio:death [\n";
                 $ttl .= "\t\ta bio:Death ;\n";
                 $ttl .= "\t\tbio:principal personobs:" . $deedid . "-" . $pkeys[$rel['p1']] . " ;\n";
@@ -310,10 +350,10 @@ function findRelations($txt){
 
     $relations = array();
 
-    // echtgenoten, man -> vrouw
+    // weduwnaars, man -> vrouw
     $patterns = array();
     $patterns[] = "/\{\{([^\}]+)\}\} als weduwnaar van \{\{([^\}]+)\}\}/";
-    $patterns[] = "/\{\{([^\}]+)\}\} weduwnaar van \{\{([^\}]+)\}\}/";
+    $patterns[] = "/\{\{([^\}]+)\}\},? weduwnaar van \{\{([^\}]+)\}\}/";
     
     foreach ($patterns as $pattern) {
         if(preg_match_all($pattern,$txt,$found)){
@@ -345,11 +385,15 @@ function findRelations($txt){
     $patterns[] = "/\{\{([^\}]+)\}\} en zijn vrouw \{\{([^\}]+)\}\}/";
     $patterns[] = "/\{\{([^\}]+)\}\} en diens vrouw \{\{([^\}]+)\}\}/";
     $patterns[] = "/\{\{([^\}]+)\}\} als man van \{\{([^\}]+)\}\}/";
+    $patterns[] = "/\{\{([^\}]+)\}\} als man end?e? momboir van \{\{([^\}]+)\}\}/";
+    $patterns[] = "/\{\{([^\}]+)\}\} man end?e? momboir van \{\{([^\}]+)\}\}/";
     $patterns[] = "/\{\{([^\}]+)\}\} getrouwd met \{\{([^\}]+)\}\}/";
     $patterns[] = "/\{\{([^\}]+)\}\} gehuwd geweest met \{\{([^\}]+)\}\}/";
     $patterns[] = "/\{\{([^\}]+)\}\} gehuwd met \{\{([^\}]+)\}\}/";
     $patterns[] = "/\{\{([^\}]+)\}\} man van \{\{([^\}]+)\}\}/";
+    $patterns[] = "/de echtelieden \{\{([^\}]+)\}\} en \{\{([^\}]+)\}\}/";
     $patterns[] = "/\{\{([^\}]+)\}\} en \{\{([^\}]+)\}\},? echtelieden/";
+    $patterns[] = "/\{\{([^\}]+)\}\} en \{\{([^\}]+)\}\},? zijn huisvrouw/";
     $patterns[] = "/\{\{([^\}]+)\}\} en \{\{([^\}]+)\}\},? e\.l\./";
     $patterns[] = "/\{\{([^\}]+)\}\} & \{\{([^\}]+)\}\},? e\.l\./";
     $patterns[] = "/\{\{([^\}]+)\}\} g\.m\. \{\{([^\}]+)\}\}/";
@@ -439,6 +483,85 @@ function findRelations($txt){
         }
         
     }
+
+    // kinderen
+    $patterns = array();
+    $patterns[] = "/\{\{([^\}]+)\}\},? verwekt bij \{\{([^\}]+)\}\}/";
+    
+    foreach ($patterns as $pattern) {
+        if(preg_match_all($pattern,$txt,$found)){
+            for ($i=0; $i<count($found[0]); $i++) {
+                $rel = array();
+                $rel['p1'] = $found[1][$i];
+                $rel['p2'] = $found[2][$i];
+                $rel['relation'] = "heeft ouder";
+                
+                $relations[] = $rel;
+
+                $rel = array();
+                $rel['p1'] = $found[2][$i];
+                $rel['p2'] = $found[1][$i];
+                $rel['relation'] = "heeft kind";
+                
+                $relations[] = $rel;
+            }
+        }
+        
+    }
+
+    // zonen
+    $patterns = array();
+    $patterns[] = "/\{\{([^\}]+)\}\},? mondige zoon van \{\{([^\}]+)\}\}/";
+    
+    foreach ($patterns as $pattern) {
+        if(preg_match_all($pattern,$txt,$found)){
+            for ($i=0; $i<count($found[0]); $i++) {
+                $rel = array();
+                $rel['p1'] = $found[1][$i];
+                $rel['p2'] = $found[2][$i];
+                $rel['relation'] = "heeft ouder";
+                $rel['p1gender'] = "Male";
+                
+                $relations[] = $rel;
+
+                $rel = array();
+                $rel['p1'] = $found[2][$i];
+                $rel['p2'] = $found[1][$i];
+                $rel['relation'] = "heeft kind";
+                
+                $relations[] = $rel;
+            }
+        }
+        
+    }
+
+    // now, maybe see if there's another relation WITHIN a name
+    $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.))? [A-Z][a-z]+)/";
+    if(preg_match_all($pattern,$txt,$found)){
+        for ($i=0; $i<count($found[0]); $i++) {
+            $rel = array();
+            $rel['p1'] = $found[0][$i];
+            $rel['p2'] = $found[6][$i];
+            $rel['relation'] = "heeft ouder";
+            if(preg_match("/dochtere?/", $found[2][$i])){
+                $rel['p1gender'] = "Female";
+            }else{
+                $rel['p1gender'] = "Male";
+            }
+            $relations[] = $rel;
+
+            $rel = array();
+            $rel['p1'] = $found[6][$i];
+            $rel['p2'] = $found[0][$i];
+            $rel['relation'] = "heeft kind";
+            if(strlen($found[4][$i])){
+                $rel['p1death'] = "before";
+            }
+            $relations[] = $rel;
+        }
+    }
+
+    $relations = array_map("unserialize", array_unique(array_map("serialize", $relations)));
     return $relations;
 }
 
@@ -454,9 +577,18 @@ function splitName($name){
     $leftover = $name;
 
     $pattern = "/ ([A-Z][a-z]+ss)$/";
+    $pattern = "/((dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.))? [A-Z][a-z]+))/";
     if(preg_match($pattern,$name,$found)){
         $pnv['patronym'] = $found[1];
         $leftover = preg_replace("/" . $found[0] . "$/", "", $leftover);
+    }
+
+    if(!isset($pnv['patronym'])){
+        $pattern = "/ ([A-Z][a-z]+(ss|sz|xz))$/";
+        if(preg_match($pattern,$name,$found)){
+            $pnv['patronym'] = $found[1];
+            $leftover = preg_replace("/" . $found[0] . "$/", "", $leftover);
+        }
     }
 
     if(!isset($pnv['patronym'])){
@@ -511,7 +643,7 @@ function splitName($name){
  */
 function isPrefix($str){
 
-    $prefixes = array("Mr.","Juffrouw");
+    $prefixes = array("Mr.","Juffrouw","Monsr.","Juffr.");
     
     if(in_array($str, $prefixes)){
         return true;
