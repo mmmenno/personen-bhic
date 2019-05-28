@@ -2,6 +2,68 @@
 
 
 
+// load givennames just one time, and access it as global var from function
+$givennames = array();
+
+if (($handle = fopen("firstnames.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 5000, ";")) !== FALSE) {
+        $givennames[] = $data[0];
+    }
+    fclose($handle);
+}
+
+
+// loop through data 
+if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
+    $i = 0;
+    $x = 0;
+    while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
+        if($i>62){
+            //break;
+        }
+        $i++;
+
+        $data[1] = str_replace("  ", " ", $data[1]);            // double space in text, sometimes :-(
+        
+        $result = findNames($data[1]);                          // find names in text
+
+        echo "\n" . $i . " - " . $result['marked'] . "\n";      // show marked text
+
+        //print_r($result['names']);                            // show found names
+
+        $names = array();
+        foreach ($result['names'] as $name) {
+            $names[$name] = splitName($name);                   // split names to PNV parts
+        }
+
+        $relations = findRelations($result['marked']);          // find relations
+
+        if(count($relations)){
+            //print_r($relations);
+        }
+
+        if(!$daterange = properDates($data[2])){                // fix messy dates
+            // notations lik 1-8-[1457], 1653 maart 3, 20-NOV-17
+            //echo $data[2] . "\n";  
+        }
+        
+        $rdf = createPersonObservations(                        // create rdf 
+                                    $data[0],
+                                    $daterange,
+                                    $names,
+                                    $relations
+                                );
+
+        echo $rdf;                                              // show personobservation as rdf
+
+    }
+    fclose($handle);
+}
+
+
+
+
+
 /**
  * lowercase words that obviously aren't names
  */
@@ -37,21 +99,10 @@ function isPlaceName($str){
 }
 
 
-// load givennames just one time, and name it as global var within function
-$givennames = array();
-
-if (($handle = fopen("../firstnames.csv", "r")) !== FALSE) {
-    while (($data = fgetcsv($handle, 5000, ";")) !== FALSE) {
-        $givennames[] = $data[0];
-    }
-    fclose($handle);
-}
-
 /**
  * see if a string is a known given name
  */
 function isGivenName($str){
-    //$names = array("Elisabeth","Gerardus","Lijsken","Jenneken"); // just testing, should query db or api here
     
     global $givennames;
 
@@ -86,7 +137,6 @@ function findNames($txt){
     $realnames = array();
     $patterns = array();
 
-
     //$patterns[] = "/[A-Z][a-z]+ (dochtere?|zoon|soene?|sone|soon) van [A-Z][a-z]+( [A-Z][a-z]+)?(van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.)? [A-Z][a-z]+/";
     // Jenneke dochter van Willem Hendrik van den Heuvel
 
@@ -112,11 +162,7 @@ function findNames($txt){
     $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+( (dochter|zoen))?/";
 
     $patterns[] = "/[A-Z][a-z]+ (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.) [A-Z][a-z]+/";
-    // Jan van Helvoirt
-
-    //$patterns[] = "/[A-Z][a-z]+ (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.) [A-Z][a-z]+t/";
-    // Jan van Helvoirt (snap niet waarom nodig met die t erachter, maar anders lukt het niet???)
-
+    
     $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ de (oude|jonge)/";
     // Willem Mans de jonge
 
@@ -180,6 +226,7 @@ function findNames($txt){
 
 
     // now, maybe see if there's another name WITHIN a name
+    // e.g. 'Agnes dochter van Jan Willem Buijs'
     foreach ($names as $key => $value) {
         $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|van de|a|v\.d\.))? [A-Z][a-z]+)/";
         if(preg_match($pattern, $value, $found)){
@@ -192,53 +239,6 @@ function findNames($txt){
 }
 
 
-if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
-    $i = 0;
-    $x = 0;
-    while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
-        if($i>62){
-            //break;
-        }
-        $i++;
-        $data[1] = str_replace("  ", " ", $data[1]); // double space in text, sometimes :-(
-    	//echo "\n" . $data[1] . "\n\n";
-    	
-        $result = findNames($data[1]);
-
-        echo "\n" . $i . " - " . $result['marked'] . "\n";
-
-    	//print_r($result['names']);
-
-        //echo $x . " + " . count($result['names']) . " = ";
-        $x = $x + count($result['names']);
-        //echo $x . "\n";
-
-        $names = array();
-        foreach ($result['names'] as $name) {
-            $names[$name] = splitName($name);
-        }
-        //print_r($names);
-
-
-        $relations = findRelations($result['marked']);
-
-        if(count($relations)){
-            //print_r($relations);
-        }
-
-        if(!$daterange = properDates($data[2])){
-            //echo $data[2] . "\n";  // notations lik 1-8-[1457], 1653 maart 3, 20-NOV-17
-            //print_r($daterange);
-        }
-        
-
-        $rdf = createPersonObservations($data[0],$daterange,$names,$relations);
-
-        echo $rdf;
-
-    }
-    fclose($handle);
-}
 
 /**
  * create proper dates (daterange actually)
