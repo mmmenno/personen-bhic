@@ -92,30 +92,30 @@ Volg de volgende stappen om de scripts te gebruiken:
 - ga naar de command line en run een scripts naar keuze
 
 ```
-> php persons2csv.php 
+$ php persons2csv.php 
 ```
 Dit script extraheert namen en zet ze in een csv-bestand.
 
 
 ```
-> php persons2rdf.php 
+$ php persons2rdf.php 
 ```
 Dit script extraheert namen en relaties en toont die gegevens als ttl (turtle).
 
 ```
-> php persons2rdf.php > personobservations.ttl
+$ php persons2rdf.php > personobservations.ttl
 ```
 Dit script extraheert namen en relaties en slaat die gegevens in het bestand `personobservatoins.ttl`
 
 Om namen in aktebeschrijvingen / transcripties te vinden en die te exporteren als csv-bestand
 
 ```
-> php findpersons.php 
+$ php findpersons.php 
 ```
 Dit script is te gebruiken als debugscript. Door verschillende variabelen te uncommenten kan je zien wat er gebeurt.
 
 ```
-> php create-sample-lines.php 
+$ php create-sample-lines.php 
 ```
 Om een kleiner testbestand te maken van een groot bestand met aktebeschrijvingen. Het pakt elke zoveelste (geef zelf een getal op) regel uit de csv en plaatst die in een nieuwe csv.
 
