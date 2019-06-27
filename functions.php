@@ -4,15 +4,15 @@
 
 // load givennames just one time, and access it as global var from function
 $givennames = array();
+$givennamescount = array();
 
-if (($handle = fopen("firstnames.csv", "r")) !== FALSE) {
-    while (($data = fgetcsv($handle, 5000, ";")) !== FALSE) {
+if (($handle = fopen("names/firstnames.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
+        $givennamescount[$data[0]] = $data[1];
         $givennames[] = $data[0];
     }
     fclose($handle);
 }
-
-
 
 /**
  * lowercase words that obviously aren't names
@@ -21,7 +21,7 @@ function decapitate($str){
 
     $notnames = array("Voor","Wij","Testament","Compareert","Testes","Deling","Transport",
         "Actum","Aen","Aan","Ende","Door","Getuigen","Verzoek","Genoemde","Voornoemde","Rekest","Hertogenbosch",
-        "Onse Lieve Vrouwe","Lieve Vrouwe","Lieve Vrouw","Hem","Bij","Onze","De","Philippus gulden","Hertog van Brabant");
+        "Onse Lieve Vrouwe","Lieve Vrouwe","Lieve Vrouw","Hem","Bij","Onze","De","Philippus gulden","Carolus gulden","Hertog van Brabant","H. Kruis-altaar","Memorie","Niet");
 
     foreach ($notnames as $notname) {
         $str = str_replace($notname . " ", strtolower($str) . " ", $str);
@@ -32,10 +32,33 @@ function decapitate($str){
 }
 
 /**
+ * sometimes names are all uppercase, undo
+ */
+function DONOTYELLATME($str){
+
+    preg_match_all("/([A-Z])([A-Z]{3,30})/",$str,$found);
+
+    for ($i=0; $i<count($found[0]); $i++){
+        $str = str_replace($found[0][$i],$found[1][$i] . strtolower($found[2][$i]),$str);
+    }
+
+    $from = array(" VAN DER "," VAN "," DE "," VANDEN ");
+    $to = array(" van der "," van "," de "," vanden ");
+    $str = str_replace($from, $to, $str);
+    //if(count($found[0])){
+    //    print_r($found);
+    //    echo $str;
+    //}
+
+    return $str;
+    
+}
+
+/**
  * get rid of placenames
  */
 function isPlaceName($str){
-    $placenames = array("Den Dungen","Den Bosch","Hertogenbosch","Sint Oedenrode","Aarle Rixtel","Maas");
+    $placenames = array("Den Dungen","Den Bosch","Hertogenbosch","Sint Oedenrode","Aarle Rixtel","Maas","Luijck");
     
     if(in_array($str, $placenames)){
         return true;
@@ -55,7 +78,7 @@ function isPlaceName($str){
 function isGivenName($str){
     
     global $givennames;
-
+    
     if(in_array($str, $givennames)){
         return true;
     }
@@ -64,11 +87,31 @@ function isGivenName($str){
 }
 
 /**
- * see if a string is a set of initials
+ * see if a string is a known given name
+ */
+function isRareGivenName($name){
+    
+    global $givennamescount;
+
+    if(array_key_exists($name, $givennamescount)){
+        if($givennamescount[$name]<2){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * see if a string is a (set of) initial(s)
  */
 function isInitials($str){
     
-    if(preg_match("/[A-Z]\.( ?[A-Z]\.)?( ?[A-Z]\.)?( ?[A-Z]\.)?( ?[A-Z]\.)?( ?[A-Z]\.)?/",$str)){
+    if(preg_match("/^[A-Z]\.( ?[A-Z]\.)?( ?[A-Z]\.)?( ?[A-Z]\.)?( ?[A-Z]\.)?( ?[A-Z]\.)?/",$str)){
+        return true;
+    }
+
+    if(preg_match("/^[A-Z]$/",$str)){ // A van der Randen (sometimes initials do not have ..)
         return true;
     }
 
@@ -80,30 +123,29 @@ function isInitials($str){
  */
 function findNames($txt){
 
-    $leftover = decapitate($txt);
+    $txt = DONOTYELLATME($txt);             // get rid of all uppercase NAMES
+    $leftover = decapitate($txt);           // lowercase some words that are 
+    
     $marked = $txt;
     
     $names = array();
     $realnames = array();
     $patterns = array();
 
-    //$patterns[] = "/[A-Z][a-z]+ (dochtere?|zoon|soene?|sone|soon) van [A-Z][a-z]+( [A-Z][a-z]+)?(van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.)? [A-Z][a-z]+/";
-    // Jenneke dochter van Willem Hendrik van den Heuvel
-
-    $patterns[] = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? [A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.))? [A-Z][a-z]+/";
+    $patterns[] = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? [A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+/";
     // Agnes dochter van Jan Willem Buijs
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+(ss\.)? (van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.) [A-Z][a-z]+/";
+    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+(ss\.)? (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) [A-Z][a-z]+/";
     // Cathalijn Willem Adriaans de Jonge
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)? (van|van ?der|der|ter|van ?den|den|de|de la|van de|a|v\.d\.) [A-Z][a-z]+/";
+    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)? (van|van ?der|der|ter|van ?den|den|de|de la|van de|van 't|van het|a|v\.d\.|vd) [A-Z][a-z]+/";
 
     $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+/";
     // Jan Dirck Jan Tijsse Versantvoort
 
     $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)? [A-Z][a-z]+(ss\.)? [A-Z][a-z]+/";
 
-    $patterns[] = "/([A-Z][a-z]+ )?(Corn\.|Henr\.|Hend\.|Jac\.|Fr\.) ((van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.) )?([A-Z][a-z]+ )?[A-Z][a-z]+/";
+    $patterns[] = "/([A-Z][a-z]+ )?(Corn\.|Henr\.|Hend\.|Jac\.|Fr\.) ((van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) )?([A-Z][a-z]+ )?[A-Z][a-z]+/";
     // Corn. Van Dijck; Henr. Arts
 
     $patterns[] = "/(Mr\.|Mr|mr|mr\.|\.|Juffr\.) [A-Z][a-z]+ [A-Z][a-z]+/";
@@ -111,14 +153,14 @@ function findNames($txt){
 
     $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+( (dochter|zoen))?/";
 
-    $patterns[] = "/[A-Z][a-z]+ (van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.) [A-Z][a-z]+/";
+    $patterns[] = "/[A-Z][a-z]+ (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) [A-Z][a-z]+/";
     
     $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)? de (oude|jonge)/";
     // Willem Mans de jonge
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)?/";
+    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.|xs\.)?/";
 
-    $patterns[] = "/[A-Z]\.( ?[A-Z]\.)?( ?[A-Z]\.)?( (van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.))? [A-Z][a-z]+/";
+    $patterns[] = "/[A-Z]\.?( ?[A-Z]\.)?( ?[A-Z]\.)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+/";
 
     $patterns[] = "/[A-Z][a-z]+/";
     
@@ -136,11 +178,20 @@ function findNames($txt){
                     $leftover = str_replace($value, "", $leftover);
                     continue;
                 }
-                if(preg_match("/^Sint /",$value)){ // e.g. Sint Marten
+                if(preg_match("/^(Sint|St|Sinte) /",$value)){ // e.g. Sint Marten
                     $leftover = str_replace($value, "", $leftover);
                     continue;
                 }
-                if(count($parts)<5 && !isGivenName($parts[0]) && !isInitials($parts[0]) && !isPrefix($parts[0])){
+                if(!isGivenName($parts[0]) && !isInitials($parts[0]) && !isPrefix($parts[0])){
+                    continue;
+                }
+                //if(count($parts)<5 && isRareGivenName($parts[0])){ // excluding rare names might reduce false positives, but greatly increases false negs
+                //    continue;
+                //}
+                if(preg_match("/ (de|het|te) " . $value . "/", $leftover)){ // 'de Wiel', not a person
+                    continue;
+                }
+                if(preg_match("/ St. " . $value . "/", $leftover)){      // 'St. Catalijn'
                     continue;
                 }
                 if(!in_array($value,$names)){
@@ -178,7 +229,7 @@ function findNames($txt){
     // now, maybe see if there's another name WITHIN a name
     // e.g. 'Agnes dochter van Jan Willem Buijs'
     foreach ($names as $key => $value) {
-        $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.))? [A-Z][a-z]+)/";
+        $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+)/";
         if(preg_match($pattern, $value, $found)){
             $names[] = $found[6];
         }
@@ -486,7 +537,7 @@ function findRelations($txt){
     }
 
     // now, maybe see if there's another relation WITHIN a name
-    $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.))? [A-Z][a-z]+)/";
+    $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+)/";
     if(preg_match_all($pattern,$txt,$found)){
         for ($i=0; $i<count($found[0]); $i++) {
             $rel = array();
@@ -527,7 +578,7 @@ function splitName($name){
     $leftover = $name;
 
     $pattern = "/ ([A-Z][a-z]+ss)$/";
-    $pattern = "/((dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|a|v\.d\.))? [A-Z][a-z]+))/";
+    $pattern = "/((dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+))/";
     if(preg_match($pattern,$name,$found)){
         $pnv['patronym'] = $found[1];
         $leftover = preg_replace("/" . $found[0] . "$/", "", $leftover);
@@ -542,7 +593,7 @@ function splitName($name){
     }
 
     if(!isset($pnv['patronym'])){
-        $pattern = "/ (van|van ?der|der|ter|van ?den|den|de|de la|van de|a|v\.d\.) ([A-Z][a-z]+)$/";
+        $pattern = "/ (van|van ?der|der|ter|van ?den|den|de|de la|van de|van 't|van het|a|v\.d\.|vd) ([A-Z][a-z]+)$/";
         if(preg_match($pattern,$name,$found)){
             $pnv['surnamePrefix'] = $found[1];
             $pnv['baseSurname'] = $found[2];

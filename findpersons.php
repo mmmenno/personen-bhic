@@ -4,7 +4,7 @@ include("functions.php");
 
 
 // loop through data 
-if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
+if (($handle = fopen("sample-na-1800.csv", "r")) !== FALSE) {
     $i = 0;
     $x = 0;
     while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
@@ -20,14 +20,24 @@ if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
         $x += count($result['names']);
 
         echo "\n" . $i . " - " . $result['marked'] . " [" . $x . " namen tot dusver]\n";      // show marked text
+        //echo "\n" . $data[0] . " - " . $result['marked'] . "\n";      // show marked text
 
         //print_r($result['names']);                            // show found names
 
+        foreach ($result['names'] as $name) {                   // check very uncommon names
+            $parts = explode(" ", $name);
+            if(isRareGivenName($parts[0])){
+                //echo "RAAR " . $name . "\n";
+            }                   
+        }
 
         $names = array();
         foreach ($result['names'] as $name) {
             $names[$name] = splitName($name);                   // split names to PNV parts
         }
+
+        //print_r($names);                                      // show splitted names
+
 
         $relations = findRelations($result['marked']);          // find relations
 

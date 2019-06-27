@@ -3,8 +3,6 @@
 *.ttl
 *.txt
 .DS_Store
+*.csv
 
-
-sample-na-1800.csv
-sample-voor-1800.csv
-names.csv
+!names/firstnames.csv
