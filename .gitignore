@@ -6,3 +6,5 @@
 *.csv
 
 !names/firstnames.csv
+!names/notnames.csv
+!names/placenames.csv

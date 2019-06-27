@@ -14,14 +14,32 @@ if (($handle = fopen("names/firstnames.csv", "r")) !== FALSE) {
     fclose($handle);
 }
 
+// load notnames just one time, and access it as global var from function
+$notnames = array();
+
+if (($handle = fopen("names/notnames.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
+        $notnames[] = $data[0];
+    }
+    fclose($handle);
+}
+
+// load notnames just one time, and access it as global var from function
+$placenames = array();
+
+if (($handle = fopen("names/placenames.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
+        $placenames[] = $data[0];
+    }
+    fclose($handle);
+}
+
 /**
  * lowercase words that obviously aren't names
  */
 function decapitate($str){
 
-    $notnames = array("Voor","Wij","Testament","Compareert","Testes","Deling","Transport",
-        "Actum","Aen","Aan","Ende","Door","Getuigen","Verzoek","Genoemde","Voornoemde","Rekest","Hertogenbosch",
-        "Onse Lieve Vrouwe","Lieve Vrouwe","Lieve Vrouw","Hem","Bij","Onze","De","Philippus gulden","Carolus gulden","Hertog van Brabant","H. Kruis-altaar","Memorie","Niet");
+    global $notnames;
 
     foreach ($notnames as $notname) {
         $str = str_replace($notname . " ", strtolower($str) . " ", $str);
@@ -58,7 +76,8 @@ function DONOTYELLATME($str){
  * get rid of placenames
  */
 function isPlaceName($str){
-    $placenames = array("Den Dungen","Den Bosch","Hertogenbosch","Sint Oedenrode","Aarle Rixtel","Maas","Luijck");
+
+    global $placenames;
     
     if(in_array($str, $placenames)){
         return true;

@@ -22,7 +22,7 @@ if (($handle = fopen("sample-na-1800.csv", "r")) !== FALSE) {
         echo "\n" . $i . " - " . $result['marked'] . " [" . $x . " namen tot dusver]\n";      // show marked text
         //echo "\n" . $data[0] . " - " . $result['marked'] . "\n";      // show marked text
 
-        //print_r($result['names']);                            // show found names
+        print_r($result['names']);                            // show found names
 
         foreach ($result['names'] as $name) {                   // check very uncommon names
             $parts = explode(" ", $name);
