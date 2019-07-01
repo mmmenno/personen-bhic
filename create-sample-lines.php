@@ -7,7 +7,7 @@ $fp = fopen('sample-na-1800.csv', 'w');
 
 if (($handle = fopen("../aangeleverd/Schepenakten_vanaf1800.txt", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 5000, "#")) !== FALSE) {
-    	if($i%1952==0){
+    	if($i%1955==0){
     		$fields = array( $data[0], $data[7], $data[6]);
     		fputcsv($fp, $fields);
     	}

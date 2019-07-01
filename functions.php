@@ -83,7 +83,7 @@ function isPlaceName($str){
         return true;
     }
 
-    if(preg_match("/ (Veld|Veldt|Landt|Wegh|Camp)$/",$str)){
+    if(preg_match("/ (Veld|Veldt|Landt|Wegh)$/",$str)){
         return true;
     }
 
@@ -144,6 +144,7 @@ function findNames($txt){
 
     $txt = DONOTYELLATME($txt);             // get rid of all uppercase NAMES
     $leftover = decapitate($txt);           // lowercase some words that are 
+    $leftover = str_replace("<ZR>",". ",$leftover);   // de zachte returns van De Ree of zo
     
     $marked = $txt;
     
@@ -151,37 +152,37 @@ function findNames($txt){
     $realnames = array();
     $patterns = array();
 
-    $patterns[] = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? [A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z]|IJ)[a-z]+( ([A-Z]|IJ)[a-z]+)?( (van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? ([A-Z]|IJ)[a-z]+/";
     // Agnes dochter van Jan Willem Buijs
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+(ss\.)? (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) [A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+(ss\.)? (van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) ([A-Z]|IJ)[a-z]+/";
     // Cathalijn Willem Adriaans de Jonge
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)? (van|van ?der|der|ter|van ?den|den|de|de la|van de|van 't|van het|a|v\.d\.|vd) [A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+(ss\.)? (van|van ?der|der|den|ter|van ?den|den|de|de la|van de|van 't|van het|a|v\.d\.|vd) ([A-Z]|IJ)[a-z]+/";
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+/";
     // Jan Dirck Jan Tijsse Versantvoort
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)? [A-Z][a-z]+(ss\.)? [A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+(ss\.)? ([A-Z]|IJ)[a-z]+(ss\.)? ([A-Z]|IJ)[a-z]+/";
 
-    $patterns[] = "/([A-Z][a-z]+ )?(Corn\.|Henr\.|Hend\.|Jac\.|Fr\.) ((van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) )?([A-Z][a-z]+ )?[A-Z][a-z]+/";
+    $patterns[] = "/(([A-Z]|IJ)[a-z]+ )?(Corn\.|Henr\.|Hend\.|Jac\.|Fr\.) ((van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) )?(([A-Z]|IJ)[a-z]+ )?([A-Z]|IJ)[a-z]+/";
     // Corn. Van Dijck; Henr. Arts
 
-    $patterns[] = "/(Mr\.|Mr|mr|mr\.|\.|Juffr\.) [A-Z][a-z]+ [A-Z][a-z]+/";
+    $patterns[] = "/(Mr\.|Mr|mr|mr\.|\.|Juffr\.) ([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+/";
     //  Mr. Jan Drabbe
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+( (dochter|zoen))?/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+( (dochter|zoen))?/";
 
-    $patterns[] = "/[A-Z][a-z]+ (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) [A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ (van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd) ([A-Z]|IJ)[a-z]+/";
     
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.)? de (oude|jonge)/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+(ss\.)? de (oude|jonge)/";
     // Willem Mans de jonge
 
-    $patterns[] = "/[A-Z][a-z]+ [A-Z][a-z]+(ss\.|xs\.)?/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+ ([A-Z]|IJ)[a-z]+(ss\.|xs\.)?/";
 
-    $patterns[] = "/[A-Z]\.?( ?[A-Z]\.)?( ?[A-Z]\.)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)\.?( ?([A-Z]|IJ)\.)?( ?([A-Z]|IJ)\.)?( (van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? ([A-Z]|IJ)[a-z]+/";
 
-    $patterns[] = "/[A-Z][a-z]+/";
+    $patterns[] = "/([A-Z]|IJ)[a-z]+/";
     
     
 
@@ -210,7 +211,10 @@ function findNames($txt){
                 if(preg_match("/ (de|het|te) " . $value . "/", $leftover)){ // 'de Wiel', not a person
                     continue;
                 }
-                if(preg_match("/ St. " . $value . "/", $leftover)){      // 'St. Catalijn'
+                if(preg_match("/ (St\.|Heiligen?) " . $value . "/", $leftover)){      // 'St. Catalijn', 'Heilige Petrus'
+                    continue;
+                }
+                if(preg_match("/(Sint-)" . $value . "/", $leftover)){      // 'Sint-Agatha'
                     continue;
                 }
                 if(!in_array($value,$names)){
@@ -248,7 +252,7 @@ function findNames($txt){
     // now, maybe see if there's another name WITHIN a name
     // e.g. 'Agnes dochter van Jan Willem Buijs'
     foreach ($names as $key => $value) {
-        $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+)/";
+        $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+)/";
         if(preg_match($pattern, $value, $found)){
             $names[] = $found[6];
         }
@@ -556,7 +560,7 @@ function findRelations($txt){
     }
 
     // now, maybe see if there's another relation WITHIN a name
-    $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+)/";
+    $pattern = "/[A-Z][a-z]+( de)? (dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+)/";
     if(preg_match_all($pattern,$txt,$found)){
         for ($i=0; $i<count($found[0]); $i++) {
             $rel = array();
@@ -597,7 +601,7 @@ function splitName($name){
     $leftover = $name;
 
     $pattern = "/ ([A-Z][a-z]+ss)$/";
-    $pattern = "/((dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+))/";
+    $pattern = "/((dochtere?|zoon|soene?|sone|soon)( van)?( w(ij|y)len)? ([A-Z][a-z]+( [A-Z][a-z]+)?( (van|van ?der|der|den|ter|van ?den|de|de la|van de|van 't|van het|a|v\.d\.|vd))? [A-Z][a-z]+))/";
     if(preg_match($pattern,$name,$found)){
         $pnv['patronym'] = $found[1];
         $leftover = preg_replace("/" . $found[0] . "$/", "", $leftover);
@@ -612,7 +616,7 @@ function splitName($name){
     }
 
     if(!isset($pnv['patronym'])){
-        $pattern = "/ (van|van ?der|der|ter|van ?den|den|de|de la|van de|van 't|van het|a|v\.d\.|vd) ([A-Z][a-z]+)$/";
+        $pattern = "/ (van|van ?der|der|den|ter|van ?den|den|de|de la|van de|van 't|van het|a|v\.d\.|vd) ([A-Z][a-z]+)$/";
         if(preg_match($pattern,$name,$found)){
             $pnv['surnamePrefix'] = $found[1];
             $pnv['baseSurname'] = $found[2];
@@ -663,7 +667,7 @@ function splitName($name){
  */
 function isPrefix($str){
 
-    $prefixes = array("Mr.","Juffrouw","Monsr.","Juffr.","Joncker","Mejuffrouw","Eerwaarde");
+    $prefixes = array("Mr.","Juffrouw","Monsr.","Juffr.","Joncker","Mejuffrouw","Eerwaarde","Meester","Heer","Jonkheer");
     
     if(in_array($str, $prefixes)){
         return true;
