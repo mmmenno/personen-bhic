@@ -1,6 +1,6 @@
 <?php
 
-$fileToExtractNamesFrom = "../aangeleverd/Schepenakten_voor1800.txt";
+$fileToExtractNamesFrom = "sample-na-1800.csv";
 $csvOutput = "names.csv";
 
 /*
@@ -18,7 +18,7 @@ $csvOutput = "names.csv";
 include("functions.php");
 
 $fp = fopen($csvOutput, 'w');
-$fields = array("akte","literalName","prefix","givenName","patronym","surname","surnamePrefix","baseSurname");
+$fields = array("akte","literalName","prefix","givenName","initials","patronym","surname","surnamePrefix","baseSurname");
 fputcsv($fp, $fields);
 fclose($fp);
 
@@ -26,9 +26,9 @@ fclose($fp);
 // loop through data 
 if (($handle = fopen($fileToExtractNamesFrom, "r")) !== FALSE) {
     
-    while (($data = fgetcsv($handle, 5000, "#")) !== FALSE) {
+    while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
         
-        $text = $data[7];                                       // which column contains description?
+        $text = $data[1];                                       // which column contains description?
         $deedid = $data[0];                                     // which column contains deed id?
 
         $text = str_replace("  ", " ", $text);                  // double space in text, sometimes :-(
@@ -47,7 +47,6 @@ if (($handle = fopen($fileToExtractNamesFrom, "r")) !== FALSE) {
             $names[$name] = splitName($name);                   // split names to PNV parts
         }
 
-                                            
         foreach ($names as $k => $v) {                          // write csv
             writecsv($deedid,$v);
         }
@@ -65,7 +64,7 @@ function writecsv($deedid,$nameparts){
 
     $fp = fopen($csvOutput, 'a');
     $fields = array();
-    $wanted = array("literalName","prefix","givenName","patronym","surname","surnamePrefix","baseSurname");
+    $wanted = array("literalName","prefix","givenName","initials","patronym","surname","surnamePrefix","baseSurname");
     $fields['id'] = $deedid;
     foreach ($wanted as $k => $v) {
         if(isset($nameparts[$v])){

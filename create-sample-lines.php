@@ -3,11 +3,11 @@
 // There are over 300000 Schepenakten, get only every nth to test & develop
 
 $i = 0;
-$fp = fopen('sample-na-1800.csv', 'w');
+$fp = fopen('sample-voor-1800.csv', 'w');
 
-if (($handle = fopen("../aangeleverd/Schepenakten_vanaf1800.txt", "r")) !== FALSE) {
+if (($handle = fopen("../aangeleverd/Schepenakten_voor1800.txt", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 5000, "#")) !== FALSE) {
-    	if($i%1955==0){
+    	if($i%1951==0){
     		$fields = array( $data[0], $data[7], $data[6]);
     		fputcsv($fp, $fields);
     	}

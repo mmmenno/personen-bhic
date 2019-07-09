@@ -4,11 +4,11 @@ include("functions.php");
 
 
 // loop through data 
-if (($handle = fopen("sample-na-1800.csv", "r")) !== FALSE) {
+if (($handle = fopen("sample-voor-1800.csv", "r")) !== FALSE) {
     $i = 0;
     $x = 0;
     while (($data = fgetcsv($handle, 5000, ",")) !== FALSE) {
-        if($i>216){
+        if($i>29){
             break;
         }
         $i++;
@@ -27,7 +27,7 @@ if (($handle = fopen("sample-na-1800.csv", "r")) !== FALSE) {
         foreach ($result['names'] as $name) {                   // check very uncommon names
             $parts = explode(" ", $name);
             if(isRareGivenName($parts[0])){
-                //echo "RAAR " . $name . "\n";
+                //echo "RAAR " . $name . "\n";                  // not helpful
             }                   
         }
 
@@ -57,7 +57,7 @@ if (($handle = fopen("sample-na-1800.csv", "r")) !== FALSE) {
                                     $relations
                                 );
 
-        //echo $rdf;                                              // show personobservation as rdf
+        echo $rdf;                                              // show personobservation as rdf
 
     }
     fclose($handle);
